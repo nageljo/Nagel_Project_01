@@ -1,2 +1,2 @@
 # Purpose
-This file contains all edited data files.
+This file contains all processed data files.
