@@ -1,6 +1,8 @@
 ---
 title: "Lead_Report"
-output: pdf_document
+output:
+  word_document: default
+  pdf_document: default
 date: "2024-10-01"
 ---
 
@@ -12,13 +14,33 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
-# Read in data
 ```{r}
-lead <- read_csv("DataRaw/lead-iq-01.csv)
+lead <- read_csv("../DataRaw/lead-iq-01.csv", show_col_types = FALSE)
+```
+
+```{r}
+(
+  ggplot(data = lead, aes(x = Smelter, y = IQ))
+  + geom_boxplot()
+  + labs(title = "Figure 1")
+  + theme_classic()
+)
+```
+
+```{r}
+(
+  lead
+  %>% summarise(
+    .by = Smelter,
+    `Mean IQ` = mean(IQ) %>% round(2),
+    `SD IQ` = sd(IQ) %>% round(2)
+  )
+) -> summaries
+
+knitr::kable(summaries, format = "pipe", padding = 2, caption = "Table 1: Means and SDs")
 ```
 
 
-```{r}
 
-```
+Looking at *Figure 1* and *Table 1* above, it appears that those in the Far group have, on average, a higher IQ $(mean \pm SD = `r summaries[[2]][1]` \pm `r summaries[[3]][1]`)$ than those in the Near group $(mean \pm SD = `r summaries[[2]][2]` \pm `r summaries[[3]][2]`)$.
 
