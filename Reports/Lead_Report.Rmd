@@ -1,8 +1,8 @@
 ---
 title: "Lead_Report"
 output:
-  word_document: default
   pdf_document: default
+  word_document: default
 date: "2024-10-01"
 ---
 
@@ -19,9 +19,12 @@ lead <- read_csv("../DataRaw/lead-iq-01.csv", show_col_types = FALSE)
 ```
 
 ```{r}
+set.seed(1)
+
 (
   ggplot(data = lead, aes(x = Smelter, y = IQ))
-  + geom_boxplot()
+  + geom_jitter(width = 0.35, alpha = 0.25)
+  + stat_summary(fun = mean, geom = "crossbar")
   + labs(title = "Figure 1")
   + theme_classic()
 )
@@ -42,5 +45,4 @@ knitr::kable(summaries, format = "pipe", padding = 2, caption = "Table 1: Means 
 
 
 
-Looking at *Figure 1* and *Table 1* above, it appears that those in the Far group have, on average, a higher IQ $(mean \pm SD = `r summaries[[2]][1]` \pm `r summaries[[3]][1]`)$ than those in the Near group $(mean \pm SD = `r summaries[[2]][2]` \pm `r summaries[[3]][2]`)$.
-
+Looking at *Figure 1* and *Table 1* above, it appears that those in the Far group have, on average, a higher IQ $(mean \pm SD = `r summaries[[2]][1]` \pm `r summaries[[3]][1]`)$ than those in the Near group $(mean \pm SD = `r summaries[[2]][2]` \pm `r summaries[[3]][2]`)$. It also appears that there is an outline in the Far group with an IQ of 999.
