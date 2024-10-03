@@ -18,6 +18,15 @@ library(tidyverse)
 lead <- read_csv("../DataRaw/lead-iq-01.csv", show_col_types = FALSE)
 ```
 
+
+```{r}
+(
+  lead
+  %>% mutate(IQ = if_else(IQ == 999, 99, IQ))
+) -> lead
+```
+
+
 ```{r}
 set.seed(1)
 
@@ -29,6 +38,7 @@ set.seed(1)
   + theme_classic()
 )
 ```
+
 
 ```{r}
 (
@@ -45,4 +55,4 @@ knitr::kable(summaries, format = "pipe", padding = 2, caption = "Table 1: Means 
 
 
 
-Looking at *Figure 1* and *Table 1* above, it appears that those in the Far group have, on average, a higher IQ $(mean \pm SD = `r summaries[[2]][1]` \pm `r summaries[[3]][1]`)$ than those in the Near group $(mean \pm SD = `r summaries[[2]][2]` \pm `r summaries[[3]][2]`)$. It also appears that there is an outline in the Far group with an IQ of 999.
+One of the member of the Far group originally had an IQ of 999. This was a mistake and the IQ was corrected to 99. Looking at *Figure 1* and *Table 1* above, it appears that those in the Far group have a slightly higher average IQ $(mean \pm SD = `r summaries[[2]][1]` \pm `r summaries[[3]][1]`)$ than those in the Near group $(mean \pm SD = `r summaries[[2]][2]` \pm `r summaries[[3]][2]`)$. However, there do not appear to be any large differences in IQ between the Near and Far groups.
